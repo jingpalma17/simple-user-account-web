@@ -1,0 +1,22 @@
+section {
+  width: 100%;
+  margin: 30px auto;
+  max-width: 320px;
+  text-align: center;
+
+  .upload-card {
+    border: solid 1px #dfdfdf;
+    color: #5c5c5c;
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-width: 320px;
+    width: 100%;
+  }
+}

@@ -1,1 +1,55 @@
-<p>profile works!</p>
+<section class="profile-container">
+  <h1>My profile</h1>
+  <div class="upload-card"></div>
+  <form [formGroup]="form" (ngSubmit)="register(form.value)">
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        placeholder="First Name"
+        formControlName="firstName"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        placeholder="Last Name"
+        formControlName="lastName"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="Email" formControlName="email" />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        placeholder="Mobile Number"
+        formControlName="mobileNumber"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        placeholder="Birthday"
+        formControlName="birthday"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        placeholder="Gender"
+        formControlName="gender"
+      />
+    </mat-form-field>
+    <button mat-button class="primary" (click)="(null)">
+      Cancel
+    </button>
+    <button mat-button class="primary" (click)="(null)">
+      Update
+    </button>
+  </form>
+</section>
