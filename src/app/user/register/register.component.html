@@ -1,1 +1,37 @@
-<p>register works!</p>
+<section class="register-container">
+  <h1>Create an account</h1>
+
+  <form [formGroup]="form" (ngSubmit)="register(form.value)">
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        placeholder="First Name"
+        formControlName="firstName"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        placeholder="Last Name"
+        formControlName="lastName"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="Email" formControlName="email" />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        placeholder="Mobile Number"
+        formControlName="mobileNumber"
+      />
+    </mat-form-field>
+    <button mat-button class="primary" (click)="(null)">
+      Next
+    </button>
+    <div>Already a member? <a routerLink="/login">Sign in</a></div>
+  </form>
+</section>
