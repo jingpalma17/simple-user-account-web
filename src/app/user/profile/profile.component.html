@@ -2,7 +2,7 @@
   <h1>My profile</h1>
   <div class="upload-card"></div>
   <form [formGroup]="form" (ngSubmit)="register(form.value)">
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input
         type="text"
         matInput
@@ -10,7 +10,7 @@
         formControlName="firstName"
       />
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input
         type="text"
         matInput
@@ -18,10 +18,10 @@
         formControlName="lastName"
       />
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input type="text" matInput placeholder="Email" formControlName="email" />
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input
         type="text"
         matInput
@@ -29,7 +29,7 @@
         formControlName="mobileNumber"
       />
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input
         type="text"
         matInput
@@ -37,19 +37,18 @@
         formControlName="birthday"
       />
     </mat-form-field>
-    <mat-form-field>
-      <input
-        type="text"
-        matInput
-        placeholder="Gender"
-        formControlName="gender"
-      />
-    </mat-form-field>
-    <button mat-button class="primary" (click)="(null)">
-      Cancel
-    </button>
-    <button mat-button class="primary" (click)="(null)">
-      Update
-    </button>
+    <mat-radio-group formControlName="gender">
+      <mat-radio-button value="1">Male</mat-radio-button>
+      <mat-radio-button value="2">Female</mat-radio-button>
+    </mat-radio-group>
+    <div class="button-actions">
+      <button mat-raised-button (click)="(null)">
+        Cancel
+      </button>
+      <span></span>
+      <button mat-raised-button color="primary" (click)="(null)">
+        Update
+      </button>
+    </div>
   </form>
 </section>

@@ -6,6 +6,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
+    MatRadioModule,
   ],
   exports: [
     MatTableModule,
@@ -25,6 +27,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
+    MatRadioModule,
   ],
   providers: [],
 })

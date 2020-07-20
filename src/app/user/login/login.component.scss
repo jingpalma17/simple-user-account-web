@@ -10,5 +10,12 @@ section {
     margin: auto;
     max-width: 320px;
     width: 100%;
+
+    .sign-in-tag {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
   }
 }

@@ -10,6 +10,7 @@ import { RegisterComponent } from './user/register/register.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { MaterialModule } from './material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,

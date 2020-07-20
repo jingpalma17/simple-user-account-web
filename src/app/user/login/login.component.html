@@ -2,10 +2,10 @@
   <h1>Login</h1>
 
   <form [formGroup]="form" (ngSubmit)="login(form.value)">
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input type="text" matInput placeholder="Email" formControlName="email" />
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input
         type="password"
         matInput
@@ -13,13 +13,13 @@
         formControlName="password"
       />
     </mat-form-field>
-    <div>
+    <div class="sign-in-tag">
       <div class="stay-signed-in">Stay signed in</div>
       <div class="forgot-password">
         <a routerLink="/forgot-password">Forgot your password?</a>
       </div>
     </div>
-    <button mat-button class="primary" (click)="(null)">
+    <button mat-raised-button color="primary" (click)="(null)">
       Sign in
     </button>
     <div>Don't you have an account? <a routerLink="/register">Register</a></div>

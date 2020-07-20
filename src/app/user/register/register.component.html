@@ -2,7 +2,7 @@
   <h1>Create an account</h1>
 
   <form [formGroup]="form" (ngSubmit)="register(form.value)">
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input
         type="text"
         matInput
@@ -10,7 +10,7 @@
         formControlName="firstName"
       />
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input
         type="text"
         matInput
@@ -18,10 +18,10 @@
         formControlName="lastName"
       />
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input type="text" matInput placeholder="Email" formControlName="email" />
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input
         type="text"
         matInput
@@ -29,7 +29,7 @@
         formControlName="mobileNumber"
       />
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input
         type="password"
         matInput
@@ -37,7 +37,7 @@
         formControlName="password"
       />
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input
         type="password"
         matInput
@@ -45,7 +45,7 @@
         formControlName="confirmPassword"
       />
     </mat-form-field>
-    <button mat-button class="primary" (click)="(null)">
+    <button mat-raised-button color="primary" (click)="(null)">
       Register
     </button>
     <div>Already a member? <a routerLink="/login">Sign in</a></div>

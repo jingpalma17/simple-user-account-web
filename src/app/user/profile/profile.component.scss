@@ -3,6 +3,9 @@ section {
   margin: 30px auto;
   max-width: 320px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .upload-card {
     border: solid 1px #dfdfdf;
@@ -18,5 +21,18 @@ section {
     margin: auto;
     max-width: 320px;
     width: 100%;
+
+    .button-actions {
+      display: flex;
+      button {
+        flex: 1;
+      }
+    }
+
+    mat-radio-group {
+      mat-radio-button {
+        margin: 10px;
+      }
+    }
   }
 }
