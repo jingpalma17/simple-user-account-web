@@ -29,8 +29,24 @@
         formControlName="mobileNumber"
       />
     </mat-form-field>
+    <mat-form-field>
+      <input
+        type="password"
+        matInput
+        placeholder="Password"
+        formControlName="password"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="password"
+        matInput
+        placeholder="Confirm Password"
+        formControlName="confirmPassword"
+      />
+    </mat-form-field>
     <button mat-button class="primary" (click)="(null)">
-      Next
+      Register
     </button>
     <div>Already a member? <a routerLink="/login">Sign in</a></div>
   </form>
