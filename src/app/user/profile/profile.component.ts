@@ -24,7 +24,6 @@ export class ProfileComponent implements OnInit {
     this.form = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
       mobileNumber: new FormControl('', Validators.required),
       birthday: new FormControl('', Validators.required),
       gender: new FormControl('', Validators.required),
@@ -48,7 +47,6 @@ export class ProfileComponent implements OnInit {
   update(form) {
     const user = {
       userId: this.userId,
-      userEmailId: form.email,
       userSmsNumber: form.mobileNumber,
       userGender: form.gender,
       userBirthdate: form.birthday || null,
