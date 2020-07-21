@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ProfileComponent implements OnInit {
   form: FormGroup;
+  userId;
   image;
 
   constructor(
@@ -28,9 +29,11 @@ export class ProfileComponent implements OnInit {
     });
 
     this.userService.getProfile().subscribe((user) => {
+      this.userId = user.userId;
+
       this.form.setValue({
-        firstName: user.userName, // TODO slice string by ','
-        lastName: user.userName,
+        firstName: user.userName.split(',')[1], // TODO slice string by ','
+        lastName: user.userName.split(',')[0],
         email: user.userEmailId,
         mobileNumber: user.userSmsNumber,
         birthday: user.userBirthdate,
@@ -40,9 +43,20 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  register(data) {}
-
-  update() {
-    this.snackbar.open('User updated', 'Ok', { duration: 3000 });
+  update(form) {
+    const user = {
+      userId: this.userId,
+      userEmailId: form.email,
+      userSmsNumber: form.mobileNumber,
+      userGender: form.gender,
+      userBirthdate: form.birthday,
+      userName: [form.lastName, form.firstName].join(','),
+    };
+    this.userService.update(user).subscribe(
+      () => {
+        this.snackbar.open('Profile updated', 'Ok', { duration: 3000 });
+      },
+      () => this.snackbar.open('Please try again.', 'Ok', { duration: 3000 })
+    );
   }
 }

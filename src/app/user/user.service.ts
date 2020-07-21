@@ -57,7 +57,7 @@ export class UserService {
     const headers = new HttpHeaders(this.getHeaders());
     const options = { headers };
     return this.http.put(
-      environment.apiBaseUrl + `${this.basePath}/${user.id}`,
+      environment.apiBaseUrl + `${this.basePath}/${user.userId}`,
       user,
       options
     );
