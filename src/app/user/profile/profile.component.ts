@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MapService } from '../../map/map.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,6 +15,7 @@ export class ProfileComponent implements OnInit {
   image;
 
   constructor(
+    private readonly mapService: MapService,
     private readonly userService: UserService,
     private readonly snackbar: MatSnackBar
   ) {}
@@ -49,14 +51,17 @@ export class ProfileComponent implements OnInit {
       userEmailId: form.email,
       userSmsNumber: form.mobileNumber,
       userGender: form.gender,
-      userBirthdate: form.birthday,
+      userBirthdate: form.birthday || null,
       userName: [form.lastName, form.firstName].join(','),
-    };
-    this.userService.update(user).subscribe(
-      () => {
-        this.snackbar.open('Profile updated', 'Ok', { duration: 3000 });
-      },
-      () => this.snackbar.open('Please try again.', 'Ok', { duration: 3000 })
-    );
+    } as any;
+    this.mapService.getIPInfo().subscribe((ipInfo: any) => {
+      user.userIp = ipInfo.ip;
+      this.userService.update(user).subscribe(
+        () => {
+          this.snackbar.open('Profile updated', 'Ok', { duration: 3000 });
+        },
+        () => this.snackbar.open('Please try again.', 'Ok', { duration: 3000 })
+      );
+    });
   }
 }
