@@ -71,4 +71,15 @@ export class UserService {
       options
     );
   }
+
+  login(email, password) {
+    const headers = new HttpHeaders(this.getHeaders());
+    const options = { headers }; // TODO Change to json
+
+    return this.http.post(
+      environment.apiBaseUrl + this.basePath + '/login',
+      { email, password },
+      { responseType: 'text' }
+    );
+  }
 }
