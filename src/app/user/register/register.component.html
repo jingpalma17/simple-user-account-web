@@ -1,7 +1,7 @@
 <section class="register-container">
   <h1>Create an account</h1>
 
-  <form [formGroup]="form" (ngSubmit)="register(form.value)">
+  <form [formGroup]="form">
     <mat-form-field appearance="outline">
       <input
         type="text"
@@ -45,7 +45,7 @@
         formControlName="confirmPassword"
       />
     </mat-form-field>
-    <button mat-raised-button color="primary" routerLink="/profile">
+    <button mat-raised-button color="primary" (click)="register(form.value)">
       Register
     </button>
     <div>Already a member? <a routerLink="/login">Sign in</a></div>

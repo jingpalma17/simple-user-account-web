@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UserService } from '../user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -9,7 +12,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class RegisterComponent implements OnInit {
   form: FormGroup;
 
-  constructor() {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly snackbar: MatSnackBar,
+    private readonly router: Router
+  ) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -22,5 +29,22 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  register(data) {}
+  register(form) {
+    const user = {
+      userEmailId: form.email,
+      userSmsNumber: form.mobileNumber,
+      userPassword: form.password,
+      userName: [form.lastName, form.firstName].join(','),
+    };
+    this.userService.create(user).subscribe(
+      (userId) => {
+        if (!userId) {
+          this.snackbar.open('Please try again.', 'Ok', { duration: 3000 });
+          return;
+        }
+        this.router.navigate(['/profile']);
+      },
+      () => this.snackbar.open('Please try again.', 'Ok', { duration: 3000 })
+    );
+  }
 }
