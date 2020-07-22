@@ -8,7 +8,11 @@
         matInput
         placeholder="First Name"
         formControlName="firstName"
+        required
       />
+      <mat-error *ngIf="form.controls.firstName.errors">
+        Please enter your first name.
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <input
@@ -16,10 +20,17 @@
         matInput
         placeholder="Last Name"
         formControlName="lastName"
+        required
       />
+      <mat-error *ngIf="form.controls.lastName.errors">
+        Please enter your last name.
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <input type="text" matInput placeholder="Email" formControlName="email" />
+      <mat-error *ngIf="form.controls.email.errors">
+        Please enter your email.
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <input
@@ -27,7 +38,11 @@
         matInput
         placeholder="Mobile Number"
         formControlName="mobileNumber"
+        required
       />
+      <mat-error *ngIf="form.controls.mobileNumber.errors">
+        Please enter your mobile number.
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <input
@@ -36,6 +51,9 @@
         placeholder="Password"
         formControlName="password"
       />
+      <mat-error *ngIf="form.controls.password.errors">
+        Please enter your password.
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <input
@@ -44,8 +62,15 @@
         placeholder="Confirm Password"
         formControlName="confirmPassword"
       />
+      <mat-error *ngIf="form.controls.confirmPassword.errors">
+        Please enter your confirm password.
+      </mat-error>
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="register(form.value)">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="form.valid && register(form.value)"
+    >
       Register
     </button>
     <div>Already a member? <a routerLink="/login">Sign in</a></div>

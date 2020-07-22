@@ -45,7 +45,8 @@ export class RegisterComponent implements OnInit {
         );
         this.router.navigate(['/login']);
       },
-      (error) => this.snackbar.open(error, 'Ok', { duration: 3000 })
+      (error) =>
+        this.snackbar.open('Please try again', 'Ok', { duration: 3000 })
     );
   }
 }
