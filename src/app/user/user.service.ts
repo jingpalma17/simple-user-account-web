@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -32,12 +32,13 @@ export class UserService {
     return this.http.get(environment.apiBaseUrl + this.basePath, options);
   }
 
-  getProfile(): Observable<any> {
+  // TODO change to 'me'
+  getProfile(userId): Observable<any> {
     const headers = new HttpHeaders(this.getHeaders());
     const options = { headers };
 
     return this.http.get(
-      environment.apiBaseUrl + `${this.basePath}/me`,
+      environment.apiBaseUrl + `${this.basePath}/${userId}`,
       options
     );
   }
@@ -72,6 +73,7 @@ export class UserService {
     );
   }
 
+  // TODO To be removed?
   login(email, password) {
     const headers = new HttpHeaders(this.getHeaders());
     const options = { headers }; // TODO Change to json
