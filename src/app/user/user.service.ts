@@ -73,15 +73,15 @@ export class UserService {
     );
   }
 
-  // TODO To be removed?
-  login(email, password) {
+  verifyEmailToken(token: string): Observable<boolean> {
     const headers = new HttpHeaders(this.getHeaders());
-    const options = { headers }; // TODO Change to json
-
+    const options = { headers };
     return this.http.post(
-      environment.apiBaseUrl + this.basePath + '/login',
-      { email, password },
-      { responseType: 'text' }
-    );
+      `${environment.apiBaseUrl}${this.basePath}/verify-email/${token}`,
+      {
+        token,
+      },
+      options
+    ) as any;
   }
 }
