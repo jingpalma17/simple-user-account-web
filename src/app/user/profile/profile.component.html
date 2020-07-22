@@ -15,7 +15,11 @@
         matInput
         placeholder="First Name"
         formControlName="firstName"
+        required
       />
+      <mat-error *ngIf="form.controls.firstName.errors">
+        Please enter your first name.
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <input
@@ -23,10 +27,21 @@
         matInput
         placeholder="Last Name"
         formControlName="lastName"
+        required
       />
+      <mat-error *ngIf="form.controls.lastName.errors">
+        Please enter your last name.
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <input type="text" matInput placeholder="Email" readonly />
+      <input
+        type="text"
+        matInput
+        placeholder="Email"
+        readonly
+        [value]="email"
+        required
+      />
     </mat-form-field>
     <mat-form-field appearance="outline">
       <input
@@ -34,26 +49,41 @@
         matInput
         placeholder="Mobile Number"
         formControlName="mobileNumber"
+        required
       />
+      <mat-error *ngIf="form.controls.mobileNumber.errors">
+        Please enter your mobile number.
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <input
         type="text"
         matInput
-        placeholder="Birthday"
-        formControlName="birthday"
+        placeholder="Birthdate"
+        formControlName="birthdate"
+        required
       />
+      <mat-error *ngIf="form.controls.birthdate.errors">
+        Please enter your birthdate.
+      </mat-error>
     </mat-form-field>
-    <mat-radio-group formControlName="gender">
+    <mat-radio-group formControlName="gender" required>
       <mat-radio-button value="1">Male</mat-radio-button>
       <mat-radio-button value="2">Female</mat-radio-button>
     </mat-radio-group>
+    <mat-error *ngIf="!form.valid"
+      >Please fill up all required fields.</mat-error
+    >
     <div class="button-actions">
-      <button mat-raised-button routerLink="/login">
-        Cancel
+      <button mat-raised-button (click)="logout()">
+        Logout
       </button>
       <span></span>
-      <button mat-raised-button color="primary" (click)="update(form.value)">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="form.valid ? update(form.value) : null"
+      >
         Update
       </button>
     </div>
