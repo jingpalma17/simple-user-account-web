@@ -26,8 +26,8 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
       mobileNumber: new FormControl('', Validators.required),
       birthdate: new FormControl('', Validators.required),
       gender: new FormControl('', Validators.required),
@@ -36,11 +36,11 @@ export class ProfileComponent implements OnInit {
     const userId = this.authenticationService.currentUserValue.user.userId;
     this.userService.getProfile(userId).subscribe((user) => {
       this.form.setValue({
-        firstName: user.userName.split(',')[1],
-        lastName: user.userName.split(',')[0],
-        mobileNumber: user.userSmsNumber,
-        birthdate: user.userBirthdate,
-        gender: user.userGender,
+        firstName: (user.userName && user.userName.split(',')[1]) || '',
+        lastName: (user.userName && user.userName.split(',')[0]) || '',
+        mobileNumber: user.userSmsNumber || '',
+        birthdate: user.userBirthdate || null,
+        gender: user.userGender || null,
       });
       this.image = user.userPhoto;
       this.email = user.userEmailId;
