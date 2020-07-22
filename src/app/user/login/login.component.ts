@@ -36,7 +36,9 @@ export class LoginComponent implements OnInit {
         }
         this.router.navigate(['/profile']);
       },
-      () => this.snackbar.open('Please try again.', 'Ok', { duration: 3000 })
+      (error) => {
+        this.snackbar.open(error.error.message, 'Ok', { duration: 3000 });
+      }
     );
   }
 }
