@@ -4,6 +4,8 @@ import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { AuthenticationService } from '../../auth/authentication.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,7 +15,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
 
   constructor(
-    private readonly userService: UserService,
+    private readonly authenticationService: AuthenticationService,
     private readonly router: Router,
     private readonly snackbar: MatSnackBar
   ) {}
@@ -26,9 +28,9 @@ export class LoginComponent implements OnInit {
   }
 
   login(form) {
-    this.userService.login(form.email, form.password).subscribe(
-      (userId) => {
-        if (!userId) {
+    this.authenticationService.login(form.email, form.password).subscribe(
+      (currentUser) => {
+        if (!currentUser) {
           this.snackbar.open('Please try again.', 'Ok', { duration: 3000 });
           return;
         }
