@@ -5,12 +5,18 @@ import { LoginComponent } from './user/login/login.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { RegisterComponent } from './user/register/register.component';
 import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: 'login',
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'profile',
+        component: ProfileComponent,
+      },
+    ],
   },
   {
     path: 'login',
@@ -19,10 +25,6 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
-  },
-  {
-    path: 'profile',
-    component: ProfileComponent,
   },
   {
     path: 'forgot-password',
