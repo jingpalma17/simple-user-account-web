@@ -38,13 +38,14 @@ export class RegisterComponent implements OnInit {
     };
     this.userService.create(user).subscribe(
       (userId) => {
-        if (!userId) {
-          this.snackbar.open('Please try again.', 'Ok', { duration: 3000 });
-          return;
-        }
-        this.router.navigate(['/profile']);
+        this.snackbar.open(
+          'Please check your email and confirm your registration.',
+          'Ok',
+          { duration: 3000 }
+        );
+        this.router.navigate(['/login']);
       },
-      () => this.snackbar.open('Please try again.', 'Ok', { duration: 3000 })
+      (error) => this.snackbar.open(error, 'Ok', { duration: 3000 })
     );
   }
 }
