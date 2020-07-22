@@ -3,7 +3,16 @@
 
   <form [formGroup]="form">
     <mat-form-field appearance="outline">
-      <input type="text" matInput placeholder="Email" formControlName="email" />
+      <input
+        type="text"
+        matInput
+        placeholder="Email"
+        formControlName="email"
+        required
+      />
+      <mat-error *ngIf="form.controls.email.errors">
+        Please enter your email.
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <input
@@ -11,7 +20,11 @@
         matInput
         placeholder="Password"
         formControlName="password"
+        required
       />
+      <mat-error *ngIf="form.controls.password.errors">
+        Please enter your password.
+      </mat-error>
     </mat-form-field>
     <div class="sign-in-tag">
       <div class="stay-signed-in">Stay signed in</div>
@@ -19,7 +32,11 @@
         <a routerLink="/forgot-password">Forgot your password?</a>
       </div>
     </div>
-    <button mat-raised-button color="primary" (click)="login(form.value)">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="form.valid && login(form.value)"
+    >
       Sign in
     </button>
     <div>Don't you have an account? <a routerLink="/register">Register</a></div>

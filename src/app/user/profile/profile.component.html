@@ -59,10 +59,17 @@
       <input
         type="text"
         matInput
+        [matDatepicker]="birthdateDatePicker"
         placeholder="Birthdate"
         formControlName="birthdate"
         required
       />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="birthdateDatePicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #birthdateDatePicker></mat-datepicker>
+      <mat-hint align="start">(MM/DD/YYYY)</mat-hint>
       <mat-error *ngIf="form.controls.birthdate.errors">
         Please enter your birthdate.
       </mat-error>
@@ -82,7 +89,7 @@
       <button
         mat-raised-button
         color="primary"
-        (click)="form.valid ? update(form.value) : null"
+        (click)="form.valid && update(form.value)"
       >
         Update
       </button>
