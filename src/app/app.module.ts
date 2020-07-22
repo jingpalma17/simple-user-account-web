@@ -12,6 +12,7 @@ import { MaterialModule } from './material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.component';
 import { HttpClientModule } from '@angular/common/http';
+import { EmailConfirmationComponent } from './user/email-confirmation/email-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
     RegisterComponent,
     ProfileComponent,
     ForgotPasswordComponent,
+    EmailConfirmationComponent,
   ],
   imports: [
     BrowserModule,

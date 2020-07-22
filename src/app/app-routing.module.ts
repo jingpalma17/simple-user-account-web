@@ -6,6 +6,7 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { RegisterComponent } from './user/register/register.component';
 import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.component';
 import { AuthGuard } from './auth/auth.guard';
+import { EmailConfirmationComponent } from './user/email-confirmation/email-confirmation.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path: 'forgot-password',
     component: ForgotPasswordComponent,
+  },
+  {
+    path: 'verify-email/:token',
+    component: EmailConfirmationComponent,
   },
 ];
 
