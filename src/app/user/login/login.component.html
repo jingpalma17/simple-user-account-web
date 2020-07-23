@@ -32,6 +32,16 @@
         <a routerLink="/forgot-password">Forgot your password?</a>
       </div>
     </div>
+    <ng-container *ngIf="isUserNotVerified">
+      <div>
+        Resend email confimation? Click
+        <a
+          href="javascript:void(0)"
+          (click)="resendEmailVerification(form.controls.email.value)"
+          >here</a
+        >.
+      </div>
+    </ng-container>
     <button
       mat-raised-button
       color="primary"

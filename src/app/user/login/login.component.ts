@@ -13,11 +13,13 @@ import { AuthenticationService } from '../../auth/authentication.service';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
+  isUserNotVerified;
 
   constructor(
     private readonly authenticationService: AuthenticationService,
     private readonly router: Router,
-    private readonly snackbar: MatSnackBar
+    private readonly snackbar: MatSnackBar,
+    private readonly userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -37,8 +39,20 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/profile']);
       },
       (error) => {
+        if (error.status === 400) {
+          this.isUserNotVerified = true;
+        }
         this.snackbar.open(error.error.message, 'Ok', { duration: 3000 });
       }
     );
+  }
+
+  resendEmailVerification(email) {
+    this.userService
+      .resendEmailVerification(email)
+      .subscribe(() =>
+        this.snackbar.open('Verification link sent', 'Ok', { duration: 3000 })
+      );
+    this.isUserNotVerified = false;
   }
 }

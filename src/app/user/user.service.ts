@@ -84,4 +84,16 @@ export class UserService {
       options
     ) as any;
   }
+
+  resendEmailVerification(email: string): Observable<boolean> {
+    const headers = new HttpHeaders(this.getHeaders());
+    const options = { headers };
+    return this.http.post(
+      `${environment.apiBaseUrl}${this.basePath}/resend-email-verification`,
+      {
+        email,
+      },
+      options
+    ) as any;
+  }
 }
