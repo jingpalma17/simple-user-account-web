@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  ValidatorFn,
+  AbstractControl,
+} from '@angular/forms';
 import { UserService } from '../user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -11,6 +17,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
   form: FormGroup;
+  phonenumber;
 
   constructor(
     private readonly userService: UserService,
@@ -19,17 +26,63 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
-      mobileNumber: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
-      confirmPassword: new FormControl('', Validators.required),
-    });
+    const REGEX_TLD_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    this.form = new FormGroup(
+      {
+        email: new FormControl('', [
+          Validators.required,
+          Validators.email,
+          Validators.pattern(REGEX_TLD_EMAIL),
+        ]),
+        firstName: new FormControl('', [Validators.required]),
+        lastName: new FormControl('', [Validators.required]),
+        mobileNumber: new FormControl(''),
+        password: new FormControl('', [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/),
+        ]),
+        confirmPassword: new FormControl('', Validators.required),
+      },
+      {
+        validators: [
+          this.passwordFormatValidator(),
+          this.confirmPasswordValidator(),
+        ],
+      }
+    );
+  }
+
+  passwordFormatValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const password = control.get('password');
+      if (password.hasError('required')) {
+        return { required: true };
+      } else if (password.hasError('minlength')) {
+        return { minlength: true };
+      } else if (password.hasError('pattern')) {
+        return { pattern: true };
+      }
+    };
+  }
+
+  confirmPasswordValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const password = control.get('password');
+      const confirmPassword = control.get('confirmPassword');
+      if (
+        (password.value || confirmPassword.value) &&
+        password.value !== confirmPassword.value
+      ) {
+        confirmPassword.setErrors({ misMatch: true });
+        return { misMatch: true };
+      }
+      confirmPassword.setErrors(null);
+    };
   }
 
   register(form) {
+    console.log(form.mobileNumber);
     const user = {
       userEmailId: form.email,
       userSmsNumber: form.mobileNumber,
@@ -46,7 +99,7 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/login']);
       },
       (error) =>
-        this.snackbar.open('Please try again', 'Ok', { duration: 3000 })
+        this.snackbar.open(error.error.message, 'Ok', { duration: 3000 })
     );
   }
 }

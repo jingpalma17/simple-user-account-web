@@ -29,30 +29,42 @@
     <mat-form-field appearance="outline">
       <input type="text" matInput placeholder="Email" formControlName="email" />
       <mat-error *ngIf="form.controls.email.errors">
-        Please enter your email.
+        <ng-container
+          *ngIf="form.controls.email.hasError('required'); else notValid"
+        >
+          Please enter your email.
+        </ng-container>
+        <ng-template #notValid>Please enter a valid e-mail.</ng-template>
       </mat-error>
     </mat-form-field>
-    <mat-form-field appearance="outline">
-      <input
-        type="text"
-        matInput
-        placeholder="Mobile Number"
-        formControlName="mobileNumber"
-        required
-      />
-      <mat-error *ngIf="form.controls.mobileNumber.errors">
-        Please enter your mobile number.
-      </mat-error>
-    </mat-form-field>
+    <international-phone-number
+      placeholder="Enter phone number"
+      [maxlength]="20"
+      [defaultCountry]="'ph'"
+      [required]="true"
+      formControlName="mobileNumber"
+    ></international-phone-number>
+    <mat-error *ngIf="form.controls.mobileNumber.errors">
+      Please enter your mobile number.
+    </mat-error>
     <mat-form-field appearance="outline">
       <input
         type="password"
         matInput
         placeholder="Password"
         formControlName="password"
+        required
       />
-      <mat-error *ngIf="form.controls.password.errors">
-        Please enter your password.
+      <mat-error *ngIf="!!form.controls.password.invalid">
+        <ng-container *ngIf="form.controls.password.hasError('required')">
+          Password is required.
+        </ng-container>
+        <ng-container *ngIf="form.controls.password.hasError('minlength')">
+          Minimum 8 characters.
+        </ng-container>
+        <ng-container *ngIf="form.controls.password.hasError('pattern')">
+          Need at least an uppercase and a lowercase letter, and a number.
+        </ng-container>
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
@@ -61,9 +73,19 @@
         matInput
         placeholder="Confirm Password"
         formControlName="confirmPassword"
+        required
       />
-      <mat-error *ngIf="form.controls.confirmPassword.errors">
-        Please enter your confirm password.
+      <mat-error *ngIf="form.controls.confirmPassword.invalid">
+        <ng-container
+          *ngIf="form.controls.confirmPassword.hasError('required')"
+        >
+          Confirm Password is required.
+        </ng-container>
+        <ng-container
+          *ngIf="form.controls.confirmPassword.hasError('misMatch')"
+        >
+          Password mismatch.
+        </ng-container>
       </mat-error>
     </mat-form-field>
     <button

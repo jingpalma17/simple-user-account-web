@@ -9,11 +9,12 @@ import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './user/register/register.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { MaterialModule } from './material/material.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EmailConfirmationComponent } from './user/email-confirmation/email-confirmation.component';
 
+import { InternationalPhoneNumberModule } from 'ngx-international-phone-number';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +31,8 @@ import { EmailConfirmationComponent } from './user/email-confirmation/email-conf
     MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
+    InternationalPhoneNumberModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
