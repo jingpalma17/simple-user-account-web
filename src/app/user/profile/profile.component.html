@@ -1,12 +1,13 @@
 <section class="profile-container">
   <h1>My profile</h1>
-  <div class="upload-card">
-    <img
-      mat-card-image
-      class="file-preview"
-      alt="Product Photo"
-      [src]="image"
-    />
+  <div>
+    <button mat-raised-button color="primary" (click)="imageFile.click()">
+      Select File
+    </button>
+    <input hidden #imageFile type="file" (change)="onSelectPhotoFile($event)" />
+  </div>
+  <div class="photo-container photo">
+    <img mat-card-image [src]="photo.currentUrl" />
   </div>
   <form [formGroup]="form">
     <mat-form-field appearance="outline">

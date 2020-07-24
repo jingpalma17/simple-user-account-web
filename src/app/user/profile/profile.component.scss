@@ -7,16 +7,25 @@ section {
   flex-direction: column;
   align-items: center;
 
-  .upload-card {
-    border: solid 1px #dfdfdf;
-    color: #5c5c5c;
-    width: 200px;
-    height: 200px;
-    object-fit: contain;
-
+  .photo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: solid 1px #ccc;
+    margin-top: 5px;
+    color: #999;
+    &.photo {
+      width: 150px;
+      height: 150px;
+      img {
+        object-fit: contain;
+        width: 150px;
+        height: 150px;
+      }
+    }
     img {
-      width: 100%;
-      object-fit: contain;
+      flex-shrink: 0;
     }
   }
 

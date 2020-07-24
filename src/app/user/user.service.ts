@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpEvent,
+  HttpRequest,
+} from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { mergeMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -95,5 +101,38 @@ export class UserService {
       },
       options
     ) as any;
+  }
+
+  getPresignedUrl(fileItem: { url?: string; file?: File }): Observable<any> {
+    const params = {
+      name: fileItem.file.name,
+    };
+    return this.http.post(
+      `${environment.apiBaseUrl}${this.basePath}` + '/photo-presign',
+      params
+    );
+  }
+
+  uploadPhoto(fileItem: {
+    url?: string;
+    file?: File;
+  }): Observable<HttpEvent<any>> {
+    return this.getPresignedUrl(fileItem).pipe(
+      mergeMap((result) => {
+        fileItem.url = result.destinationUrl;
+        // next upload the file to the AWS S3 bucket
+        const request = new HttpRequest(
+          'PUT',
+          result.signedUrl,
+          fileItem.file,
+          {
+            headers: new HttpHeaders({ 'Content-Type': fileItem.file.type }),
+            responseType: 'text',
+            reportProgress: true,
+          }
+        );
+        return this.http.request(request);
+      })
+    );
   }
 }
