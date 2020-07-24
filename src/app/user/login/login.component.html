@@ -46,8 +46,13 @@
       mat-raised-button
       color="primary"
       (click)="form.valid && login(form.value)"
+      [disabled]="isPending"
     >
-      Sign in
+      Sign in<mat-spinner
+        diameter="25"
+        color="warn"
+        *ngIf="isPending"
+      ></mat-spinner>
     </button>
     <div>Don't you have an account? <a routerLink="/register">Register</a></div>
   </form>

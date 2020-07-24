@@ -20,6 +20,8 @@ export class ProfileComponent implements OnInit {
   image;
   email;
   photo;
+  isPending = false;
+  isLoaded = false;
 
   constructor(
     private router: Router,
@@ -41,20 +43,25 @@ export class ProfileComponent implements OnInit {
     });
 
     const userId = this.authenticationService.currentUserValue.user.userId;
-    this.userService.getProfile(userId).subscribe((user) => {
-      this.form.setValue({
-        firstName: (user.userName && user.userName.split(',')[1]) || '',
-        lastName: (user.userName && user.userName.split(',')[0]) || '',
-        mobileNumber: user.userSmsNumber || '',
-        birthdate: user.userBirthdate || null,
-        gender: user.userGender || null,
-      });
-      this.photo.currentUrl = user.userPhoto;
-      this.email = user.userEmailId;
-    });
+    this.userService.getProfile(userId).subscribe(
+      (user) => {
+        this.isLoaded = true;
+        this.form.setValue({
+          firstName: (user.userName && user.userName.split(',')[1]) || '',
+          lastName: (user.userName && user.userName.split(',')[0]) || '',
+          mobileNumber: user.userSmsNumber || '',
+          birthdate: user.userBirthdate || null,
+          gender: user.userGender || null,
+        });
+        this.photo.currentUrl = user.userPhoto;
+        this.email = user.userEmailId;
+      },
+      () => (this.isLoaded = true)
+    );
   }
 
   update(form) {
+    this.isPending = true;
     let user = {
       userId: this.authenticationService.currentUserValue.user.userId,
       userSmsNumber: form.mobileNumber,
@@ -62,20 +69,26 @@ export class ProfileComponent implements OnInit {
       userBirthdate: form.birthdate || null,
       userName: [form.lastName, form.firstName].join(','),
     } as any;
-    this.mapService.getIPInfo().subscribe((ipInfo: any) => {
-      user.userIp = ipInfo.ip;
+    this.mapService.getIPInfo().subscribe(
+      (ipInfo: any) => {
+        user.userIp = ipInfo.ip;
 
-      this.upload().subscribe((result) => {
-        user = { ...user, userPhoto: this.photo.url };
-        this.userService.update(user).subscribe(
-          () => {
-            this.snackbar.open('Profile updated', 'Ok', { duration: 3000 });
-          },
-          () =>
-            this.snackbar.open('Please try again.', 'Ok', { duration: 3000 })
-        );
-      });
-    });
+        this.upload().subscribe((result) => {
+          user = { ...user, userPhoto: this.photo.url };
+          this.userService.update(user).subscribe(
+            () => {
+              this.isPending = false;
+              this.snackbar.open('Profile updated', 'Ok', { duration: 3000 });
+            },
+            () => {
+              this.isPending = false;
+              this.snackbar.open('Please try again.', 'Ok', { duration: 3000 });
+            }
+          );
+        });
+      },
+      () => (this.isPending = false)
+    );
   }
 
   logout() {

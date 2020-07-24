@@ -10,5 +10,10 @@ section {
     margin: auto;
     max-width: 320px;
     width: 100%;
+    mat-spinner {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+    }
   }
 }

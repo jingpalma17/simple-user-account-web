@@ -1,99 +1,121 @@
 <section class="profile-container">
   <h1>My profile</h1>
-  <div>
-    <button mat-raised-button color="primary" (click)="imageFile.click()">
-      Select File
-    </button>
-    <input hidden #imageFile type="file" (change)="onSelectPhotoFile($event)" />
-  </div>
-  <div class="photo-container photo">
-    <img mat-card-image [src]="photo.currentUrl" />
-  </div>
-  <form [formGroup]="form">
-    <mat-form-field appearance="outline">
+  <ng-container *ngIf="isLoaded; else loading">
+    <div>
       <input
-        type="text"
-        matInput
-        placeholder="First Name"
-        formControlName="firstName"
-        required
+        hidden
+        #imageFile
+        type="file"
+        (change)="onSelectPhotoFile($event)"
       />
-      <mat-error *ngIf="form.controls.firstName.errors">
-        Please enter your first name.
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <input
-        type="text"
-        matInput
-        placeholder="Last Name"
-        formControlName="lastName"
-        required
-      />
-      <mat-error *ngIf="form.controls.lastName.errors">
-        Please enter your last name.
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <input
-        type="text"
-        matInput
-        placeholder="Email"
-        readonly
-        [value]="email"
-        required
-      />
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <input
-        type="text"
-        matInput
-        placeholder="Mobile Number"
+    </div>
+    <div class="photo-container">
+      <div class="file-panel">
+        <div class="file-panel-toolbar">
+          <button
+            mat-icon-button
+            matTooltip="Change Photo"
+            matTooltipPosition="above"
+            (click)="imageFile.click()"
+          >
+            <mat-icon>photo_camera</mat-icon>
+          </button>
+        </div>
+      </div>
+      <img class="file-preview" mat-card-image [src]="photo.currentUrl" />
+    </div>
+    <form [formGroup]="form">
+      <mat-form-field appearance="outline">
+        <input
+          type="text"
+          matInput
+          placeholder="First Name"
+          formControlName="firstName"
+          required
+        />
+        <mat-error *ngIf="form.controls.firstName.errors">
+          Please enter your first name.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <input
+          type="text"
+          matInput
+          placeholder="Last Name"
+          formControlName="lastName"
+          required
+        />
+        <mat-error *ngIf="form.controls.lastName.errors">
+          Please enter your last name.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <input
+          type="text"
+          matInput
+          placeholder="Email"
+          readonly
+          [value]="email"
+          required
+        />
+      </mat-form-field>
+      <international-phone-number
+        placeholder="Enter phone number"
+        [maxlength]="20"
+        [defaultCountry]="'ph'"
+        [required]="true"
         formControlName="mobileNumber"
-        required
-      />
+      ></international-phone-number>
       <mat-error *ngIf="form.controls.mobileNumber.errors">
         Please enter your mobile number.
       </mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <input
-        type="text"
-        matInput
-        [matDatepicker]="birthdateDatePicker"
-        placeholder="Birthdate"
-        formControlName="birthdate"
-        required
-      />
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="birthdateDatePicker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker #birthdateDatePicker></mat-datepicker>
-      <mat-hint align="start">(MM/DD/YYYY)</mat-hint>
-      <mat-error *ngIf="form.controls.birthdate.errors">
-        Please enter your birthdate.
-      </mat-error>
-    </mat-form-field>
-    <mat-radio-group formControlName="gender" required>
-      <mat-radio-button value="1">Male</mat-radio-button>
-      <mat-radio-button value="2">Female</mat-radio-button>
-    </mat-radio-group>
-    <mat-error *ngIf="!form.valid"
-      >Please fill up all required fields.</mat-error
-    >
-    <div class="button-actions">
-      <button mat-raised-button (click)="logout()">
-        Logout
-      </button>
-      <span></span>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="form.valid && update(form.value)"
+      <mat-form-field appearance="outline">
+        <input
+          type="text"
+          matInput
+          [matDatepicker]="birthdateDatePicker"
+          placeholder="Birthdate"
+          formControlName="birthdate"
+          required
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="birthdateDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #birthdateDatePicker></mat-datepicker>
+        <mat-hint align="start">(MM/DD/YYYY)</mat-hint>
+        <mat-error *ngIf="form.controls.birthdate.errors">
+          Please enter your birthdate.
+        </mat-error>
+      </mat-form-field>
+      <mat-radio-group formControlName="gender" required>
+        <mat-radio-button value="male">Male</mat-radio-button>
+        <mat-radio-button value="female">Female</mat-radio-button>
+      </mat-radio-group>
+      <mat-error *ngIf="!form.valid"
+        >Please fill up all required fields.</mat-error
       >
-        Update
-      </button>
-    </div>
-  </form>
+      <div class="button-actions">
+        <button mat-raised-button (click)="logout()">
+          Logout
+        </button>
+        <span></span>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="form.valid && update(form.value)"
+          [disabled]="isPending"
+        >
+          Update
+          <mat-spinner
+            diameter="25"
+            color="warn"
+            *ngIf="isPending"
+          ></mat-spinner>
+        </button>
+      </div></form
+  ></ng-container>
+  <ng-template #loading
+    ><mat-spinner diameter="50" color="warn"></mat-spinner
+  ></ng-template>
 </section>

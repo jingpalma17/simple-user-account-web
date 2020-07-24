@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   form: FormGroup;
   phonenumber;
+  isPending = false;
 
   constructor(
     private readonly userService: UserService,
@@ -82,7 +83,7 @@ export class RegisterComponent implements OnInit {
   }
 
   register(form) {
-    console.log(form.mobileNumber);
+    this.isPending = true;
     const user = {
       userEmailId: form.email,
       userSmsNumber: form.mobileNumber,
@@ -91,15 +92,17 @@ export class RegisterComponent implements OnInit {
     };
     this.userService.create(user).subscribe(
       (userId) => {
+        this.isPending = false;
         this.snackbar.open(
           'Please check your email and confirm your registration.',
-          'Ok',
-          { duration: 3000 }
+          'Ok'
         );
         this.router.navigate(['/login']);
       },
-      (error) =>
-        this.snackbar.open(error.error.message, 'Ok', { duration: 3000 })
+      (error) => {
+        this.isPending = false;
+        this.snackbar.open(error.error.message, 'Ok', { duration: 3000 });
+      }
     );
   }
 }

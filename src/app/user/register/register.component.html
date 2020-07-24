@@ -88,12 +88,17 @@
         </ng-container>
       </mat-error>
     </mat-form-field>
+    <mat-error *ngIf="!form.valid"
+      >Please fill up all required fields.</mat-error
+    >
     <button
       mat-raised-button
       color="primary"
       (click)="form.valid && register(form.value)"
+      [disabled]="isPending"
     >
       Register
+      <mat-spinner diameter="25" color="warn" *ngIf="isPending"></mat-spinner>
     </button>
     <div>Already a member? <a routerLink="/login">Sign in</a></div>
   </form>

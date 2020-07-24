@@ -17,5 +17,11 @@ section {
       justify-content: space-between;
       margin: 10px 0;
     }
+
+    mat-spinner {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+    }
   }
 }

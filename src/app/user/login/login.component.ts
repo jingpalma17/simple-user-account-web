@@ -14,6 +14,7 @@ import { AuthenticationService } from '../../auth/authentication.service';
 export class LoginComponent implements OnInit {
   form: FormGroup;
   isUserNotVerified;
+  isPending = false;
 
   constructor(
     private readonly authenticationService: AuthenticationService,
@@ -30,8 +31,10 @@ export class LoginComponent implements OnInit {
   }
 
   login(form) {
+    this.isPending = true;
     this.authenticationService.login(form.email, form.password).subscribe(
       (currentUser) => {
+        this.isPending = false;
         if (!currentUser) {
           this.snackbar.open('Please try again.', 'Ok', { duration: 3000 });
           return;
@@ -39,6 +42,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/profile']);
       },
       (error) => {
+        this.isPending = false;
         if (error.status === 400) {
           this.isUserNotVerified = true;
         }
@@ -48,11 +52,14 @@ export class LoginComponent implements OnInit {
   }
 
   resendEmailVerification(email) {
-    this.userService
-      .resendEmailVerification(email)
-      .subscribe(() =>
-        this.snackbar.open('Verification link sent', 'Ok', { duration: 3000 })
-      );
+    this.isPending = true;
+    this.userService.resendEmailVerification(email).subscribe(
+      () => {
+        this.isPending = false;
+        this.snackbar.open('Verification link sent', 'Ok', { duration: 3000 });
+      },
+      () => (this.isPending = false)
+    );
     this.isUserNotVerified = false;
   }
 }
