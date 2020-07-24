@@ -22,7 +22,12 @@
           </button>
         </div>
       </div>
-      <img class="file-preview" mat-card-image [src]="photo.currentUrl" />
+      <img
+        class="file-preview"
+        mat-card-image
+        [src]="photo.currentUrl"
+        *ngIf="photo.currentUrl"
+      />
     </div>
     <form [formGroup]="form">
       <mat-form-field appearance="outline">
@@ -92,7 +97,7 @@
         <mat-radio-button value="male">Male</mat-radio-button>
         <mat-radio-button value="female">Female</mat-radio-button>
       </mat-radio-group>
-      <mat-error *ngIf="!form.valid"
+      <mat-error *ngIf="!form.valid || !photo.currentUrl"
         >Please fill up all required fields.</mat-error
       >
       <div class="button-actions">
