@@ -99,8 +99,6 @@ export class ProfileComponent implements OnInit {
   }
 
   upload() {
-    return of(null);
-
     if (!this.photo.file) {
       return of(null);
     }
