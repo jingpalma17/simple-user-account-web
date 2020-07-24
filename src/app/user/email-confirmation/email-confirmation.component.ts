@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-email-confirmation',
@@ -11,6 +11,7 @@ export class EmailConfirmationComponent implements OnInit {
   isSuccess = false;
 
   constructor(
+    private readonly router: Router,
     private readonly userService: UserService,
     private readonly route: ActivatedRoute
   ) {}
@@ -21,8 +22,16 @@ export class EmailConfirmationComponent implements OnInit {
   }
 
   verifyEmailToken(token) {
-    this.userService
-      .verifyEmailToken(token)
-      .subscribe((isSuccess) => (this.isSuccess = isSuccess));
+    this.userService.verifyEmailToken(token).subscribe(
+      (isSuccess) => {
+        this.isSuccess = isSuccess;
+        if (!isSuccess) {
+          this.router.navigate(['/login']);
+        }
+      },
+      () => {
+        this.router.navigate(['/login']);
+      }
+    );
   }
 }
