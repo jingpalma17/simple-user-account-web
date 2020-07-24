@@ -11,6 +11,11 @@ section {
     max-width: 320px;
     width: 100%;
 
+    mat-form-field.mat-form-field {
+      font-size: 12px;
+      padding: 3px 0;
+    }
+
     .sign-in-tag {
       display: flex;
       flex-direction: row;

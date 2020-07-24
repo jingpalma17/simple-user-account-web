@@ -66,16 +66,18 @@
           required
         />
       </mat-form-field>
-      <international-phone-number
-        placeholder="Enter phone number"
-        [maxlength]="20"
-        [defaultCountry]="'ph'"
-        [required]="true"
-        formControlName="mobileNumber"
-      ></international-phone-number>
-      <mat-error *ngIf="form.controls.mobileNumber.errors">
-        Please enter valid mobile number.
-      </mat-error>
+      <mat-form-field appearance="outline">
+        <input matInput type="text" hidden />
+        <international-phone-number
+          class="mystyle"
+          placeholder="Enter phone number"
+          [maxlength]="20"
+          [defaultCountry]="'ph'"
+          [required]="true"
+          formControlName="mobileNumber"
+          matInput
+        ></international-phone-number>
+      </mat-form-field>
       <mat-form-field appearance="outline">
         <input
           type="text"

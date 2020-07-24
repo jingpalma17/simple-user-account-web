@@ -27,7 +27,11 @@
       </mat-error>
     </mat-form-field>
     <div class="sign-in-tag">
-      <div class="stay-signed-in">Stay signed in</div>
+      <div class="stay-signed-in">
+        <mat-checkbox [checked]="true">
+          Stay signed in
+        </mat-checkbox>
+      </div>
       <div class="forgot-password">
         <a routerLink="/forgot-password">Forgot your password?</a>
       </div>

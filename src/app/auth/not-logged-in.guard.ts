@@ -9,7 +9,7 @@ import {
 import { AuthenticationService } from './authentication.service';
 
 @Injectable({ providedIn: 'root' })
-export class AuthGuard implements CanActivate {
+export class NotLoggedInGuard implements CanActivate {
   constructor(
     private readonly router: Router,
     private readonly authenticationService: AuthenticationService
@@ -17,11 +17,11 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUser = this.authenticationService.currentUserValue;
-    if (currentUser) {
+    if (!currentUser) {
       return true;
     }
 
-    this.router.navigate(['/login']);
+    this.router.navigate(['/profile']);
     return false;
   }
 }

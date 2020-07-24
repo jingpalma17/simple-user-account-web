@@ -60,6 +60,11 @@ section {
       }
     }
 
+    mat-form-field.mat-form-field {
+      font-size: 12px;
+      padding: 3px 0;
+    }
+
     mat-radio-group {
       mat-radio-button {
         margin: 10px;
@@ -70,6 +75,21 @@ section {
       position: absolute;
       top: 6px;
       right: 8px;
+    }
+
+    ::ng-deep {
+      .mystyle .dropbtn {
+        border: none;
+      }
+      input {
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+      }
+      textarea:focus,
+      input:focus {
+        outline: none;
+      }
     }
   }
 }
