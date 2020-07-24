@@ -73,7 +73,7 @@ export class ProfileComponent implements OnInit {
       (ipInfo: any) => {
         user.userIp = ipInfo.ip;
 
-        this.upload().subscribe((result) => {
+        this.upload(user.userId).subscribe((result) => {
           user = { ...user, userPhoto: this.photo.url };
           this.userService.update(user).subscribe(
             () => {
@@ -111,10 +111,11 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  upload() {
+  upload(userId) {
     if (!this.photo.file) {
       return of(null);
     }
+    this.photo.userId = userId;
 
     return this.userService.uploadPhoto(this.photo).pipe(
       map((event) => {

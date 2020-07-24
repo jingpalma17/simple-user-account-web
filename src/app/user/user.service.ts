@@ -103,8 +103,13 @@ export class UserService {
     ) as any;
   }
 
-  getPresignedUrl(fileItem: { url?: string; file?: File }): Observable<any> {
+  getPresignedUrl(fileItem: {
+    userId: string;
+    url?: string;
+    file?: File;
+  }): Observable<any> {
     const params = {
+      userId: fileItem.userId,
       name: fileItem.file.name,
     };
     return this.http.post(
@@ -114,6 +119,7 @@ export class UserService {
   }
 
   uploadPhoto(fileItem: {
+    userId: string;
     url?: string;
     file?: File;
   }): Observable<HttpEvent<any>> {
