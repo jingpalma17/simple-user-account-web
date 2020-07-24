@@ -46,7 +46,7 @@
       mat-raised-button
       color="primary"
       (click)="form.valid && login(form.value)"
-      [disabled]="isPending"
+      [disabled]="isPending || !form.valid"
     >
       Sign in<mat-spinner
         diameter="25"

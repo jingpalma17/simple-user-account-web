@@ -109,7 +109,7 @@
           mat-raised-button
           color="primary"
           (click)="form.valid && update(form.value)"
-          [disabled]="isPending"
+          [disabled]="isPending || !form.valid || !photo.currentUrl"
         >
           Update
           <mat-spinner

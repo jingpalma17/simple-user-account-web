@@ -95,7 +95,7 @@
       mat-raised-button
       color="primary"
       (click)="form.valid && register(form.value)"
-      [disabled]="isPending"
+      [disabled]="!form.valid || isPending"
     >
       Register
       <mat-spinner diameter="25" color="warn" *ngIf="isPending"></mat-spinner>
