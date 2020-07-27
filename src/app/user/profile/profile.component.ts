@@ -45,6 +45,12 @@ export class ProfileComponent implements OnInit {
     const userId = this.authenticationService.currentUserValue.user.userId;
     this.userService.getProfile(userId).subscribe(
       (user) => {
+        if (!user) {
+          this.snackbar.open('Please login again.', 'Ok', { duration: 3000 });
+          this.logout();
+          return;
+        }
+
         this.isLoaded = true;
         this.form.setValue({
           firstName: (user.userName && user.userName.split(',')[1]) || '',
@@ -56,7 +62,11 @@ export class ProfileComponent implements OnInit {
         this.photo.currentUrl = user.userPhoto;
         this.email = user.userEmailId;
       },
-      () => (this.isLoaded = true)
+      () => {
+        this.isLoaded = true;
+        this.snackbar.open('Please try again.', 'Ok', { duration: 3000 });
+        this.logout();
+      }
     );
   }
 
